@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdhaFathurrchm</title>
+  <link rel="shortcut icon" href="./assets/images/avatar-1.png" type="image/x-icon">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: {
+          'xs': '450px',
+          'sm': '580px',
+          'lg': '1024px',
+          'xl': '1250px',
+        },
+        extend: {
+          colors: {
+            'jet': 'hsl(0, 0%, 22%)',
+            'onyx': 'hsl(240, 1%, 17%)',
+            'eerie-black-1': 'hsl(240, 2%, 13%)',
+            'eerie-black-2': 'hsl(240, 2%, 12%)',
+            'smoky-black': 'hsl(0, 0%, 7%)',
+            'white-1': 'hsl(0, 0%, 100%)',
+            'white-2': 'hsl(0, 0%, 98%)',
+            'orange-yellow-crayola': 'hsl(45, 100%, 72%)',
+            'vegas-gold': 'hsl(45, 54%, 58%)',
+            'light-gray': 'hsl(0, 0%, 84%)',
+            'light-gray-70': 'hsla(0, 0%, 84%, 0.7)',
+            'bittersweet-shimmer': 'hsl(0, 43%, 51%)',
+          },
+          fontSize: {
+            'fs-1': ['24px', '1.2'],
+            'fs-2': ['18px', '1.2'],
+            'fs-3': ['17px', '1.2'],
+            'fs-4': ['16px', '1.2'],
+            'fs-5': ['15px', '1.2'],
+            'fs-6': ['14px', '1.2'],
+            'fs-7': ['13px', '1.2'],
+            'fs-8': ['11px', '1.2'],
+          },
+          fontWeight: {
+            300: '300',
+            400: '400',
+            500: '500',
+            600: '600',
+          },
+          boxShadow: {
+            '1': '-4px 8px 24px hsla(0, 0%, 0%, 0.25)',
+            '2': '0 16px 30px hsla(0, 0%, 0%, 0.25)',
+            '3': '0 16px 40px hsla(0, 0%, 0%, 0.25)',
+            '4': '0 25px 50px hsla(0, 0%, 0%, 0.15)',
+            '5': '0 24px 80px hsla(0, 0%, 0%, 0.25)',
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          backgroundImage: {
+            'gradient-onyx': 'linear-gradient(to bottom right, hsl(240, 1%, 25%) 3%, hsl(0, 0%, 19%) 97%)',
+            'gradient-jet': 'linear-gradient(to bottom right, hsla(240, 1%, 18%, 0.251) 0%, hsla(240, 2%, 11%, 0) 100%), hsl(240, 2%, 13%)',
+            'gradient-yellow-1': 'linear-gradient(to bottom right, hsl(45, 100%, 71%) 0%, hsla(36, 100%, 69%, 0) 50%)',
+            'gradient-yellow-2': 'linear-gradient(135deg, hsla(45, 100%, 71%, 0.251) 0%, hsla(35, 100%, 68%, 0) 59.86%), hsl(240, 2%, 13%)',
+            'border-gradient-onyx': 'linear-gradient(to bottom right, hsl(0, 0%, 25%) 0%, hsla(0, 0%, 25%, 0) 50%)',
+            'text-gradient-yellow': 'linear-gradient(to right, hsl(45, 100%, 72%), hsl(35, 100%, 68%))',
+          },
+          transitionDuration: {
+            '250': '0.25s',
+            '500': '0.5s',
+          },
+          transitionTimingFunction: {
+            'ease-in-out': 'ease-in-out',
+          },
+          maxHeight: {
+            '112px': '112px',
+            '203px': '203px',
+            '217px': '217px',
+            '384px': '384px',
+            '405px': '405px',
+            '584px': '584px',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-smoky-black text-light-gray font-poppins xl:overflow-y-scroll">
+
+<div id="loading-screen" class="loading-screen">
+  <div class="cat-animation-container">
+    <div class="cat">
+      <div class="paw"></div><div class="paw"></div>
+      <div class="shake">
+        <div class="tail"></div>
+        <div class="main">
+          <div class="head"></div>
+          <div class="body"><div class="leg"></div></div>
+          <div class="face">
+            <div class="mustache_cont"><div class="mustache"></div><div class="mustache"></div></div>
+            <div class="mustache_cont"><div class="mustache"></div><div class="mustache"></div></div>
+            <div class="nose"></div>
+            <div class="eye"></div><div class="eye"></div>
+            <div class="brow_cont"><div class="brow"></div><div class="brow"></div></div>
+            <div class="brow_cont"><div class="brow"></div><div class="brow"></div></div>
+            <div class="ear_l"><div class="inner"></div></div>
+            <div class="ear_r"><div class="outer"></div><div class="inner"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="loading-text">Loading website...</p>
+</div>
+
+<div id="offline-page" class="offline-page" style="display: none;">
+  <section class="page_404">
+    <div class="container"><div class="row"><div class="col-sm-12"><div class="col-sm-10 col-sm-offset-1 text-center">
+      <div class="four_zero_four_bg" style="background-image: url('./assets/images/404-illustration.gif');">
+        <h1 class="text-center">404</h1>
+      </div>
+      <div class="contant_box_404">
+        <h3 class="h2">You're Offline!</h3>
+        <p>No internet connection. Please check your network and try again.</p>
+        <a href="#" onclick="window.location.reload()" class="link_404">Retry</a>
+      </div>
+    </div></div></div></div>
+  </section>
+</div>
+
+<main class="mx-3 my-4 mb-20 min-w-[259px] sm:mx-auto sm:mt-16 sm:w-[520px] sm:pb-0 lg:mb-16 lg:w-[950px] xl:mx-auto xl:flex xl:max-w-[1200px] xl:items-stretch xl:justify-center xl:gap-6">
+
+  <aside 
+    class="sidebar z-10 mb-4 overflow-hidden rounded-2xl border border-jet bg-eerie-black-2 p-4 shadow-1 transition-all duration-500 ease-in-out xs:p-4 sm:w-[520px] sm:p-8 sm:pb-8 lg:w-[950px] xl:sticky xl:top-16 xl:z-10 xl:mb-0 xl:h-full xl:w-1/3 xl:flex-shrink-0 xl:p-10 xl:pt-16" 
+    data-sidebar>
+
+    <div class="relative flex items-center gap-4 xl:flex-col">
+      <figure class="overflow-hidden rounded-2xl bg-gradient-onyx xs:rounded-3xl">
+        <img src="./assets/images/adha1.png" alt="Adha Dwi Fathurrochman" class="w-20 xs:w-[120px] xl:w-[150px]">
+      </figure>
+
+      <div class="flex-1 xl:text-center">
+        <h1 class="mb-2.5 text-fs-3 font-medium -tracking-[0.25px] text-white-2 sm:mb-4 sm:text-fs-2 xl:whitespace-nowrap" title="Adha Dwi Fathurrochman">Adha Dwi Fathur.r</h1>
+        <p class="w-max rounded-lg bg-onyx px-3 py-0.5 text-fs-8 font-light text-white-1 xs:px-4 xs:py-1 sm:text-fs-7 xl:mx-auto">College Student</p>
+      </div>
+
+      <button class="info_more-btn group absolute -right-4 -top-4 z-10 rounded-bl-2xl bg-border-gradient-onyx p-2.5 text-fs-7 text-orange-yellow-crayola shadow-2 transition-all duration-250 ease-linear hover:bg-gradient-yellow-1 focus:bg-gradient-yellow-1 xs:p-2.5 sm:-right-8 sm:-top-8 sm:p-4 lg:p-3 xl:hidden" data-sidebar-btn>
+        <div class="absolute inset-px z-[-1] rounded-bl-2xl bg-gradient-jet transition-all duration-250 ease-linear group-hover:bg-gradient-yellow-2 group-focus:bg-gradient-yellow-2"></div>
+        <ion-icon name="chevron-down"></ion-icon>
+      </button>
+    </div>
+
+    <div class="sidebar-info_more">
+      <div class="my-4 h-px w-full bg-jet sm:my-8"></div>
+      <ul class="grid gap-4 sm:gap-5">
+        <li class="flex items-center gap-4">
+          <div class="icon-box relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-border-gradient-onyx text-base text-orange-yellow-crayola shadow-1 sm:h-12 sm:w-12 sm:rounded-xl sm:text-lg">
+            <div class="absolute inset-px z-[-1] rounded-[inherit] bg-eerie-black-1"></div>
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+          <div class="w-full min-w-0">
+            <p class="mb-0.5 text-fs-8 uppercase text-white-2">Email</p>
+            <a href="mailto:dfadha1923@gmail.com" class="truncate text-fs-7 text-light-gray transition-all duration-250 ease-linear hover:text-white-1 focus:text-white-1 sm:text-fs-7">dfadha1923@gmail.com</a>
+          </div>
+        </li>
+        <li class="flex items-center gap-4">
+          <div class="icon-box relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-border-gradient-onyx text-base text-orange-yellow-crayola shadow-1 sm:h-12 sm:w-12 sm:rounded-xl sm:text-lg">
+            <div class="absolute inset-px z-[-1] rounded-[inherit] bg-eerie-black-1"></div>
+            <ion-icon name="phone-portrait-outline"></ion-icon>
+          </div>
+          <div class="w-full min-w-0">
+            <p class="mb-0.5 text-fs-8 uppercase text-white-2">Phone</p>
+            <a href="tel:+6289666031133" class="truncate text-fs-7 text-light-gray transition-all duration-250 ease-linear hover:text-white-1 focus:text-white-1 sm:text-fs-7">+62 896-6603-1133</a>
+          </div>
+        </li>
+        <li class="flex items-center gap-4">
+          <div class="icon-box relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-border-gradient-onyx text-base text-orange-yellow-crayola shadow-1 sm:h-12 sm:w-12 sm:rounded-xl sm:text-lg">
+            <div class="absolute inset-px z-[-1] rounded-[inherit] bg-eerie-black-1"></div>
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div class="w-full min-w-0">
+            <p class="mb-0.5 text-fs-8 uppercase text-white-2">Birthday</p>
+            <time datetime="2006-01-10" class="truncate text-fs-7 text-light-gray sm:text-fs-7">January 10, 2006</time>
+          </div>
+        </li>
+        <li class="flex items-center gap-4">
+          <div class="icon-box relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-border-gradient-onyx text-base text-orange-yellow-crayola shadow-1 sm:h-12 sm:w-12 sm:rounded-xl sm:text-lg">
+            <div class="absolute inset-px z-[-1] rounded-[inherit] bg-eerie-black-1"></div>
+            <ion-icon name="location-outline"></ion-icon>
+          </div>
+          <div class="w-full min-w-0">
+            <p class="mb-0.5 text-fs-8 uppercase text-white-2">Location</p>
+            <address class="truncate not-italic text-fs-7 text-light-gray sm:text-fs-7">Semarang, Central Java,<br> Indonesia</address>
+          </div>
+        </li>
+      </ul>
+      <div class="my-4 h-px w-full bg-jet sm:my-8 xl:my-4 xl:opacity-0"></div>
+      <ul class="flex items-center gap-4 pl-2 sm:gap-5 xl:justify-center">
+        <li class="social-item">
+          <a href="https://www.linkedin.com/in/adha-dwi-fathurrochman-670a87297/" class="text-lg text-light-gray hover:text-light-gray-70">
+            <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.instagram.com/adhafathurrchm.iwd/" class="text-lg text-light-gray hover:text-light-gray-70">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <div id="main-content-wrapper" class="main-content relative sm:w-[520px] lg:w-[950px] xl:w-2/3">
+
+    <nav class="fixed bottom-0 right-0 z-10 w-full rounded-t-xl border border-jet bg-[hsla(240,1%,17%,0.75)] shadow-2 backdrop-blur-sm xs:rounded-t-2xl sm:rounded-t-2xl lg:absolute lg:right-0 lg:top-0 lg:w-max lg:rounded-bl-2xl lg:rounded-t-none lg:border-none lg:bg-transparent lg:shadow-none lg:backdrop-blur-none">
+      <ul class="flex flex-wrap items-center justify-center px-2.5 xs:gap-5 sm:gap-5 lg:gap-8 lg:px-8">
+        <li>
+          <button class="navbar-link px-2 py-5 text-fs-7 text-light-gray transition-colors duration-250 ease-linear hover:text-light-gray-70 active:text-orange-yellow-crayola xs:text-fs-6 sm:text-fs-8 lg:text-fs-6 lg:font-medium" data-nav-link>About</button>
+        </li>
+        <li>
+          <button class="navbar-link px-2 py-5 text-fs-7 text-light-gray transition-colors duration-250 ease-linear hover:text-light-gray-70 active:text-orange-yellow-crayola xs:text-fs-6 sm:text-fs-8 lg:text-fs-6 lg:font-medium" data-nav-link>Education</button>
+        </li>
+        <li>
+          <button class="navbar-link px-2 py-5 text-fs-7 text-light-gray transition-colors duration-250 ease-linear hover:text-light-gray-70 active:text-orange-yellow-crayola xs:text-fs-6 sm:text-fs-8 lg:text-fs-6 lg:font-medium" data-nav-link>Experience</button>
+        </li>
+        <li>
+          <button class="navbar-link px-2 py-5 text-fs-7 text-light-gray transition-colors duration-250 ease-linear hover:text-light-gray-70 active:text-orange-yellow-crayola xs:text-fs-6 sm:text-fs-8 lg:text-fs-6 lg:font-medium" data-nav-link>Contact</button>
+        </li>
+      </ul>
+    </nav>
+
+    <article class="page active" data-page="about">
+      <header class="article-title relative mb-6 pb-2 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-8 after:rounded-sm after:bg-text-gradient-yellow after:content-[''] sm:mb-8 sm:pb-5 sm:after:w-10 sm:after:rounded-md">
+        <h2 class="text-fs-1 font-medium capitalize text-white-2 sm:text-fs-1 sm:font-semibold">About me</h2>
+      </header>
+      <section class="mb-8 font-light text-fs-6 leading-relaxed text-light-gray xs:text-fs-6 sm:mb-10 sm:text-fs-6">
+        <p class="mb-4">
+            I am a student at the Politeknik Negeri Semarang, majoring in Telecommunication Engineering.
+            I am a relaxed, cheerful person who calmly solves problems.
+          </p>
+          <p>
+            I am passionate about developing innovative technology solutions and have a keen interest in networking,
+            telecommunications, and digital transformation. I am always open to learning and collaborating on challenging projects.
+          </p>
+      </section>
+      <section class="mb-9">
+        <h3 class="mb-5 text-fs-2 capitalize text-white-2">What I'm doing</h3>
+        <ul class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-5">
+          <li class="service-item group relative z-10 rounded-2xl bg-border-gradient-onyx p-5 shadow-2 xs:flex xs:items-start xs:gap-4 xs:p-8">
+            <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+            <div class="mb-2.5 flex h-12 w-12 items-center justify-center rounded-xl bg-onyx text-orange-yellow-crayola sm:h-12 sm:w-12 sm:rounded-xl">
+              <img src="./assets/images/icon-design.svg" alt="design icon" width="40" class="m-auto w-10">
+            </div>
+            <div class="text-center xs:flex-1 xs:text-left">
+              <h4 class="mb-2 text-fs-4 capitalize text-white-2">Competitions</h4>
+              <p class="font-light text-fs-6 leading-relaxed text-light-gray">
+                I am active in participating competitions in the fields of essays, IoT, and technology.
+              </p>
+            </div>
+          </li>
+          <li class="service-item group relative z-10 rounded-2xl bg-border-gradient-onyx p-5 shadow-2 xs:flex xs:items-start xs:gap-4 xs:p-8">
+            <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+            <div class="mb-2.5 flex h-12 w-12 items-center justify-center rounded-xl bg-onyx text-orange-yellow-crayola sm:h-12 sm:w-12 sm:rounded-xl">
+              <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40" class="m-auto w-10">
+            </div>
+            <div class="text-center xs:flex-1 xs:text-left">
+              <h4 class="mb-2 text-fs-4 capitalize text-white-2">Photography</h4>
+              <p class="font-light text-fs-6 leading-relaxed text-light-gray">
+                I am a person whose hobby is in the field of photography.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section class="clients">
+        <h3 class="mb-5 text-center text-fs-2 capitalize text-white-2">Organizations</h3>
+        <div class="carousel-container relative h-[250px] w-full overflow-hidden">
+          <button class="carousel-nav carousel-prev absolute left-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[rgba(255,215,0,0.6)] bg-transparent text-xl text-[rgba(255,215,0,0.9)] transition-all duration-300 ease-in-out hover:scale-105 hover:bg-[rgba(255,215,0,0.08)] hover:shadow-[0_0_12px_rgba(255,215,0,0.35)] active:scale-95 sm:h-11 sm:w-11"></button>
+          <button class="carousel-nav carousel-next absolute right-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[rgba(255,215,0,0.6)] bg-transparent text-xl text-[rgba(255,215,0,0.9)] transition-all duration-300 ease-in-out hover:scale-105 hover:bg-[rgba(255,215,0,0.08)] hover:shadow-[0_0_12px_rgba(255,215,0,0.35)] active:scale-95 sm:h-11 sm:w-11"></button>
+
+          <ul class="carousel-track flex h-full gap-4 px-14 transition-transform duration-500 ease-in-out sm:px-16" id="carouselTrack">
+            <li class="clients-item group relative z-10 flex h-full flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 shrink-0 w-full xs:w-[calc(100%/3-0.75rem)] lg:w-[calc(100%/4-0.75rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="https://www.instagram.com/kms.polines?igsh=YzU3bmxzcnRoN2po" target="_blank" class="mb-2">
+                <img src="./assets/images/organisasi1.png" alt="KMSS Logo" class="mx-auto h-16 w-16 rounded-full border-2 border-jet object-cover transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              </a>
+              <p class="mb-1 text-fs-7 font-semibold leading-tight text-white-1">Keluraga Mahasiswa <br> Sragen Polines</p>
+              <p class="text-fs-7 font-light text-light-gray">General Chairman <br> 2024-Present</p>
+            </li>
+            <li class="clients-item group relative z-10 flex h-full flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 shrink-0 w-full xs:w-[calc(100%/3-0.75rem)] lg:w-[calc(100%/4-0.75rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="https://www.instagram.com/polirevo?igsh=amQ3c2lsMzA1cnN3" target="_blank" class="mb-2">
+                <img src="./assets/images/organisasi2.png" alt="HMTT Logo" class="mx-auto h-16 w-16 rounded-full border-2 border-jet object-cover transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              </a>
+              <p class="mb-1 text-fs-7 font-semibold leading-tight text-white-1">Polines Robotics <br> Evolution</p>
+              <p class="text-fs-7 font-light text-light-gray">Deputy Chairman <br> 2025-Present</p>
+            </li>
+            <li class="clients-item group relative z-10 flex h-full flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 shrink-0 w-full xs:w-[calc(100%/3-0.75rem)] lg:w-[calc(100%/4-0.75rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="https://www.instagram.com/officefo.id?igsh=cGdrcjRmeHk0cHdj" target="_blank" class="mb-2">
+                <img src="./assets/images/organisasi3.png" alt="office Logo" class="mx-auto h-16 w-16 rounded-full border-2 border-jet object-cover transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              </a>
+              <p class="mb-1 text-fs-7 font-semibold leading-tight text-white-1">Office <br> FO</p>
+              <p class="text-fs-7 font-light text-light-gray">IoT Engineer <br> 2023-Present</p>
+            </li>
+            <li class="clients-item group relative z-10 flex h-full flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 shrink-0 w-full xs:w-[calc(100%/3-0.75rem)] lg:w-[calc(100%/4-0.75rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="https://www.instagram.com/osistwosra?igsh=MW1sbTFtMGxjdmx3aw==" target="_blank" class="mb-2">
+                <img src="./assets/images/organisasi4.png" alt="osis Logo" class="mx-auto h-16 w-16 rounded-full border-2 border-jet object-cover transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              </a>
+              <p class="mb-1 text-fs-7 font-semibold leading-tight text-white-1">OSIS <br> SMKN 2 Sragen</p>
+              <p class="text-fs-7 font-light text-light-gray">Chairman II <br> 2023-2024</p>
+            </li>
+            <li class="clients-item group relative z-10 flex h-full flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 shrink-0 w-full xs:w-[calc(100%/3-0.75rem)] lg:w-[calc(100%/4-0.75rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="https://www.instagram.com/fosragen?igsh=MTRjOHpuYXN6OGY5YQ==" target="_blank" class="mb-2">
+                <img src="./assets/images/organisasi6.png" alt="Fosra Logo" class="mx-auto h-16 w-16 rounded-full border-2 border-jet object-cover transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              </a>
+              <p class="mb-1 text-fs-7 font-semibold leading-tight text-white-1">Forum OSIS <br> Kab.Sragen</p>
+              <p class="text-fs-7 font-light text-light-gray">Chairman II <br> 2023-2024</p>
+            </li>
+            <li class="clients-item group relative z-10 flex h-full flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 shrink-0 w-full xs:w-[calc(100%/3-0.75rem)] lg:w-[calc(100%/4-0.75rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="https://www.instagram.com/pramukasmkn2sragen?igsh=ZGV0MzFkODFlc2pq" target="_blank" class="mb-2">
+                <img src="./assets/images/organisasi5.png" alt="DAP Logo" class="mx-auto h-16 w-16 rounded-full border-2 border-jet object-cover transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              </a>
+              <p class="mb-1 text-fs-7 font-semibold leading-tight text-white-1">Dewan Ambalan Penegak <br> SMKN 2 Sragen</p>
+              <p class="text-fs-7 font-light text-light-gray">Secretary <br> 2023-2024</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <article class="page" data-page="education">
+      <header class="article-title relative mb-6 pb-2 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-8 after:rounded-sm after:bg-text-gradient-yellow after:content-[''] sm:mb-8 sm:pb-5 sm:after:w-10 sm:after:rounded-md">
+        <h2 class="text-fs-1 font-medium capitalize text-white-2 sm:text-fs-1 sm:font-semibold">Education</h2>
+      </header>
+      <section class="timeline mb-10">
+        <div class="title-wrapper mb-5 flex items-center gap-4 sm:mb-6">
+          <div class="icon-box relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-border-gradient-onyx text-base text-orange-yellow-crayola shadow-1 sm:h-12 sm:w-12 sm:rounded-xl sm:text-lg">
+            <div class="absolute inset-px z-[-1] rounded-[inherit] bg-eerie-black-1"></div>
+            <ion-icon name="book-outline"></ion-icon>
+          </div>
+          <h3 class="text-fs-2 capitalize text-white-2">Education</h3>
+        </div>
+        <ol class="ml-8 sm:ml-12">
+          <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">Politeknik Negeri Semarang</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>2024 - Present</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              I am a student in the Telecommunication Engineering program. I am actively involved in participating in competitions, and I am also actively engaged in organizations.
+            </p>
+          </li>
+          <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">SMK Negeri 2 Sragen</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>2021 - 2024</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              During my high school years, I was actively involved in the various organizations available, and I also participated in several academic competitions.
+            </p>
+          </li>
+          <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">SMP Negeri 2 Sragen</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>2018 - 2021</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              During my junior high school years, I was an outstanding student, consistently ranking in the top 5 parallel classes for three years, and I was also actively involved in various organizations.
+            </p>
+          </li>
+        </ol>
+      </section>
+    </article>
+
+    <article class="page" data-page="experience">
+      <header class="article-title relative mb-6 pb-2 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-8 after:rounded-sm after:bg-text-gradient-yellow after:content-[''] sm:mb-8 sm:pb-5 sm:after:w-10 sm:after:rounded-md">
+        <h2 class="text-fs-1 font-medium capitalize text-white-2 sm:text-fs-1 sm:font-semibold">Experience</h2>
+      </header>
+      <section class="timeline mb-8">
+        <div class="title-wrapper mb-5 flex items-center gap-4 sm:mb-6">
+          <div class="icon-box relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-border-gradient-onyx text-base text-orange-yellow-crayola shadow-1 sm:h-12 sm:w-12 sm:rounded-xl sm:text-lg">
+            <div class="absolute inset-px z-[-1] rounded-[inherit] bg-eerie-black-1"></div>
+            <ion-icon name="briefcase-outline"></ion-icon>
+          </div>
+          <h3 class="text-fs-2 capitalize text-white-2">Experience</h3>
+        </div>
+        <ol class="ml-8 sm:ml-12">
+          <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">IoT Engineer</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>2023 - Present</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              As an IoT Engineer, I assist in the creation of hardware in the assembly of IoT devices, as well as in the wiring of these devices.
+            </p>
+          </li>
+          <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">Social Media Designer</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>Feb 2024 - May 2024</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              As a Freelance Social Media Designer for Batik Hamayra...
+            </p>
+          </li>
+          <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">Desainer Grafis</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>2021 - 2024</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              As a Freelance Graphic Designer at Faster Digital Print...
+            </p>
+          </li>
+           <li class="timeline-item relative mb-6 pl-4 before:absolute before:-left-5 before:top-0 before:h-full before:w-0.5 before:bg-jet after:absolute after:-left-[23px] after:top-1.5 after:h-2 after:w-2 after:rounded-full after:bg-orange-yellow-crayola sm:pl-6 sm:before:-left-7 sm:after:-left-[31px]">
+            <h4 class="mb-1 text-fs-4 font-semibold capitalize text-white-2">Network Technician</h4>
+            <p class="text-fs-6 font-light text-light-gray"><span>Nov 2022 - Feb 2023</span></p>
+            <p class="mt-2 text-fs-6 font-light leading-relaxed text-light-gray xl:max-w-[700px]">
+              Internship as a network technician at the Dinas Komunikasi dan Informatika Kab.Sragen...
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section class="achievement">
+        <h3 class="mb-5 text-fs-2 capitalize text-white-2">My Achievements</h3>
+        <div class="carousel-container relative h-[300px] w-full overflow-hidden">
+          <button class="carousel-nav carousel-prev absolute left-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[rgba(255,215,0,0.6)] bg-transparent text-xl text-[rgba(255,215,0,0.9)] transition-all duration-300 ease-in-out hover:scale-105 hover:bg-[rgba(255,215,0,0.08)] hover:shadow-[0_0_12px_rgba(255,215,0,0.35)] active:scale-95 sm:h-11 sm:w-11"></button>
+          <button class="carousel-nav carousel-next absolute right-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[rgba(255,215,0,0.6)] bg-transparent text-xl text-[rgba(255,215,0,0.9)] transition-all duration-300 ease-in-out hover:scale-105 hover:bg-[rgba(255,215,0,0.08)] hover:shadow-[0_0_12px_rgba(255,215,0,0.35)] active:scale-95 sm:h-11 sm:w-11"></button>
+
+          <ul class="carousel-track flex h-full gap-4 px-14 transition-transform duration-500 ease-in-out sm:px-16" id="achievementCarouselTrack">
+            <li class="achievement-item group relative z-10 flex w-full shrink-0 flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.33%-0.66rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="#" title="view more" class="mb-4 block">
+                <img src="./assets/images/penghargaan1.webp" alt="Foto Prestasi 1" class="h-28 w-28 rounded-2xl border-2 border-orange-yellow-crayola object-cover transition-transform duration-250 group-hover:scale-105 sm:h-32 sm:w-32">
+              </a>
+              <p class="mb-1.5 text-fs-5 font-semibold leading-tight text-white-2">Second Place</p>
+              <p class="text-fs-6 font-light leading-snug text-light-gray">Lomba Baris Berbaris Kab.Sagen 2024</p>
+            </li>
+            <li class="achievement-item group relative z-10 flex w-full shrink-0 flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.33%-0.66rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="#" title="view more" class="mb-4 block">
+                <img src="./assets/images/penghargaan2.webp" alt="Foto Prestasi 2" class="h-28 w-28 rounded-2xl border-2 border-orange-yellow-crayola object-cover transition-transform duration-250 group-hover:scale-105 sm:h-32 sm:w-32">
+              </a>
+              <p class="mb-1.5 text-fs-5 font-semibold leading-tight text-white-2">First Place</p>
+              <p class="text-fs-6 font-light leading-snug text-light-gray">Iklan Layanan Masyarakat Kab.Sragen 2024</p>
+            </li>
+            <li class="achievement-item group relative z-10 flex w-full shrink-0 flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.33%-0.66rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="#" title="view more" class="mb-4 block">
+                <img src="./assets/images/penghargaan3.webp" alt="Foto Prestasi 3" class="h-28 w-28 rounded-2xl border-2 border-orange-yellow-crayola object-cover transition-transform duration-250 group-hover:scale-105 sm:h-32 sm:w-32">
+              </a>
+              <p class="mb-1.5 text-fs-5 font-semibold leading-tight text-white-2">Second Place</p>
+              <p class="text-fs-6 font-light leading-snug text-light-gray">Cyber Security Competition Kab.Sragen 2024</p>
+            </li>
+            <li class="achievement-item group relative z-10 flex w-full shrink-0 flex-col items-center justify-center rounded-2xl bg-border-gradient-onyx p-5 text-center shadow-2 sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.33%-0.66rem)]">
+              <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet"></div>
+              <a href="#" title="view more" class="mb-4 block">
+                <img src="./assets/images/penghargaan4.webp" alt="Foto Prestasi 4" class="h-28 w-28 rounded-2xl border-2 border-orange-yellow-crayola object-cover transition-transform duration-250 group-hover:scale-105 sm:h-32 sm:w-32">
+              </a>
+              <p class="mb-1.5 text-fs-5 font-semibold leading-tight text-white-2">Top 10 Finalist</p>
+              <p class="text-fs-6 font-light leading-snug text-light-gray">Elektro Expo - IoT Competition 2024</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <article class="page" data-page="contact">
+      <header class="article-title relative mb-6 pb-2 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-8 after:rounded-sm after:bg-text-gradient-yellow after:content-[''] sm:mb-8 sm:pb-5 sm:after:w-10 sm:after:rounded-md">
+        <h2 class="text-fs-1 font-medium capitalize text-white-2 sm:text-fs-1 sm:font-semibold">Contact</h2>
+      </header>
+      <section class="mapbox mb-8 overflow-hidden rounded-2xl border border-jet sm:h-80 lg:h-96">
+        <figure class="h-full">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31682.023847701006!2d110.42777322986429!3d-7.042802016021118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708daa5fe99b6d%3A0x8b418b3563a62884!2sTembalang%2C%20Semarang%20City%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1730704895878!5m2!1sen!2sid"
+              class="h-full w-full grayscale invert" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </figure>
+      </section>
+      <section>
+        <h3 class="mb-5 text-fs-2 capitalize text-white-2">Contact Form</h3>
+        <form action="#" class="mb-2.5" data-form>
+          <div class="mb-6 grid gap-6 sm:grid-cols-2">
+            <input type="text" name="fullname" class="form-input w-full rounded-2xl border border-jet bg-transparent px-5 py-3.5 text-fs-6 text-white-2 outline-none placeholder:font-medium focus:border-orange-yellow-crayola focus:invalid:border-bittersweet-shimmer" placeholder="Full name" required data-form-input>
+            <input type="email" name="email" class="form-input w-full rounded-2xl border border-jet bg-transparent px-5 py-3.5 text-fs-6 text-white-2 outline-none placeholder:font-medium focus:border-orange-yellow-crayola focus:invalid:border-bittersweet-shimmer" placeholder="Email address" required data-form-input>
+          </div>
+          <textarea name="message" class="form-input mb-6 h-32 min-h-[100px] w-full resize-y rounded-2xl border border-jet bg-transparent px-5 py-3.5 text-fs-6 text-white-2 outline-none placeholder:font-medium focus:border-orange-yellow-crayola focus:invalid:border-bittersweet-shimmer" placeholder="Your Message" required data-form-input></textarea>
+          <button class="form-btn group relative z-10 flex w-full items-center justify-center gap-2.5 rounded-2xl bg-border-gradient-onyx px-5 py-3.5 text-fs-6 capitalize text-orange-yellow-crayola shadow-3 transition-all duration-250 ease-linear hover:bg-gradient-yellow-1 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-border-gradient-onyx sm:w-max sm:ml-auto" type="submit" disabled data-form-btn>
+            <div class="absolute inset-px z-[-1] rounded-2xl bg-gradient-jet transition-all duration-250 ease-linear group-hover:bg-gradient-yellow-2 group-disabled:group-hover:bg-gradient-jet"></div>
+            <ion-icon name="paper-plane" class="text-base"></ion-icon>
+            <span>Send Message</span>
+          </button>
+        </form>
+      </section>
+    </article>
+      
+    <article class="page" data-page="portfolio"></article>
+    <article class="page" data-page="blog"></article>
+
+  </div>
+</div>
+</main>
+
+<script src="./assets/js/script.js"></script>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
