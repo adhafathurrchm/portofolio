@@ -32,14 +32,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-poppins);
 }
 
-/* Grayscale Photo Effect as per design.md */
+/* Full Original Color Photo Effect */
 .hero-grayscale-img {
-  filter: grayscale(100%) contrast(108%);
+  filter: none !important;
   transition: filter 0.4s ease, transform 0.4s ease;
 }
 
 .hero-grayscale-img:hover {
-  filter: grayscale(0%) contrast(100%);
+  filter: none !important;
 }
 
 /* Strict Image Containment Rules */

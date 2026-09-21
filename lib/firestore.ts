@@ -59,6 +59,17 @@ function setLocalCache<T>(key: string, data: T): void {
   }
 }
 
+function cleanPayload<T extends object>(data: T): Record<string, any> {
+  const clean: Record<string, any> = {};
+  Object.keys(data).forEach((key) => {
+    const val = (data as any)[key];
+    if (val !== undefined && key !== "id") {
+      clean[key] = val;
+    }
+  });
+  return clean;
+}
+
 export async function getProfileData(): Promise<Profile> {
   const cached = getLocalCache<Profile>("portfolio_profile");
   if (!isFirebaseConfigured || !db) return cached || memoryProfile;
@@ -83,7 +94,8 @@ export async function saveProfileData(profile: Profile): Promise<boolean> {
   if (!isFirebaseConfigured || !db) return true;
   try {
     const docRef = doc(db, "profile", "main");
-    await setDoc(docRef, profile, { merge: true });
+    const payload = cleanPayload(profile);
+    await setDoc(docRef, payload, { merge: true });
     return true;
   } catch (err) {
     console.error("Firestore profile save error:", err);
@@ -110,21 +122,20 @@ export async function getServicesData(): Promise<Service[]> {
 }
 
 export async function saveServiceItem(service: Partial<Service>): Promise<boolean> {
-  if (service.id) {
-    memoryServices = memoryServices.map((s) => (s.id === service.id ? { ...s, ...service } as Service : s));
+  let targetId = service.id;
+  if (targetId) {
+    memoryServices = memoryServices.map((s) => (s.id === targetId ? ({ ...s, ...service } as Service) : s));
   } else {
-    const newService = { ...service, id: `serv-${Date.now()}`, order: memoryServices.length + 1 } as Service;
+    targetId = `serv-${Date.now()}`;
+    const newService = { ...service, id: targetId, order: memoryServices.length + 1 } as Service;
     memoryServices.push(newService);
   }
   setLocalCache("portfolio_services", memoryServices);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
-    if (service.id) {
-      await updateDoc(doc(db, "services", service.id), service);
-    } else {
-      await addDoc(collection(db, "services"), service);
-    }
+    const payload = cleanPayload(service);
+    await setDoc(doc(db, "services", targetId), payload, { merge: true });
     return true;
   } catch (err) {
     console.error("Firestore service save error:", err);
@@ -165,21 +176,20 @@ export async function getResumeData(): Promise<ResumeItem[]> {
 }
 
 export async function saveResumeItem(item: Partial<ResumeItem>): Promise<boolean> {
-  if (item.id) {
-    memoryResumeItems = memoryResumeItems.map((r) => (r.id === item.id ? { ...r, ...item } as ResumeItem : r));
+  let targetId = item.id;
+  if (targetId) {
+    memoryResumeItems = memoryResumeItems.map((r) => (r.id === targetId ? ({ ...r, ...item } as ResumeItem) : r));
   } else {
-    const newItem = { ...item, id: `res-${Date.now()}`, order: memoryResumeItems.length + 1 } as ResumeItem;
+    targetId = `res-${Date.now()}`;
+    const newItem = { ...item, id: targetId, order: memoryResumeItems.length + 1 } as ResumeItem;
     memoryResumeItems.push(newItem);
   }
   setLocalCache("portfolio_resume", memoryResumeItems);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
-    if (item.id) {
-      await updateDoc(doc(db, "resume", item.id), item);
-    } else {
-      await addDoc(collection(db, "resume"), item);
-    }
+    const payload = cleanPayload(item);
+    await setDoc(doc(db, "resume", targetId), payload, { merge: true });
     return true;
   } catch (err) {
     console.error("Firestore resume save error:", err);
@@ -220,21 +230,20 @@ export async function getProjectsData(): Promise<PortfolioProject[]> {
 }
 
 export async function saveProjectData(project: Partial<PortfolioProject>): Promise<boolean> {
-  if (project.id) {
-    memoryProjects = memoryProjects.map((p) => (p.id === project.id ? { ...p, ...project } as PortfolioProject : p));
+  let targetId = project.id;
+  if (targetId) {
+    memoryProjects = memoryProjects.map((p) => (p.id === targetId ? ({ ...p, ...project } as PortfolioProject) : p));
   } else {
-    const newProj = { ...project, id: `proj-${Date.now()}`, createdAt: Date.now() } as PortfolioProject;
+    targetId = `proj-${Date.now()}`;
+    const newProj = { ...project, id: targetId, createdAt: Date.now() } as PortfolioProject;
     memoryProjects.unshift(newProj);
   }
   setLocalCache("portfolio_projects", memoryProjects);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
-    if (project.id) {
-      await updateDoc(doc(db, "portfolio", project.id), project);
-    } else {
-      await addDoc(collection(db, "portfolio"), { ...project, createdAt: Date.now() });
-    }
+    const payload = cleanPayload({ ...project, createdAt: project.createdAt || Date.now() });
+    await setDoc(doc(db, "portfolio", targetId), payload, { merge: true });
     return true;
   } catch (err) {
     console.error("Firestore project save error:", err);
@@ -339,21 +348,20 @@ export async function getCompetenciesData(): Promise<Competency[]> {
 }
 
 export async function saveCompetencyItem(item: Partial<Competency>): Promise<boolean> {
-  if (item.id) {
-    memoryCompetencies = memoryCompetencies.map((c) => (c.id === item.id ? { ...c, ...item } as Competency : c));
+  let targetId = item.id;
+  if (targetId) {
+    memoryCompetencies = memoryCompetencies.map((c) => (c.id === targetId ? ({ ...c, ...item } as Competency) : c));
   } else {
-    const newItem = { ...item, id: `comp-${Date.now()}`, order: memoryCompetencies.length + 1 } as Competency;
+    targetId = `comp-${Date.now()}`;
+    const newItem = { ...item, id: targetId, order: memoryCompetencies.length + 1 } as Competency;
     memoryCompetencies.push(newItem);
   }
   setLocalCache("portfolio_competencies", memoryCompetencies);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
-    if (item.id) {
-      await updateDoc(doc(db, "competencies", item.id), item);
-    } else {
-      await addDoc(collection(db, "competencies"), item);
-    }
+    const payload = cleanPayload(item);
+    await setDoc(doc(db, "competencies", targetId), payload, { merge: true });
     return true;
   } catch (err) {
     console.error("Firestore competency save error:", err);
@@ -394,21 +402,20 @@ export async function getSkillsData(): Promise<SkillCategory[]> {
 }
 
 export async function saveSkillItem(item: Partial<SkillCategory>): Promise<boolean> {
-  if (item.id) {
-    memorySkills = memorySkills.map((s) => (s.id === item.id ? { ...s, ...item } as SkillCategory : s));
+  let targetId = item.id;
+  if (targetId) {
+    memorySkills = memorySkills.map((s) => (s.id === targetId ? ({ ...s, ...item } as SkillCategory) : s));
   } else {
-    const newItem = { ...item, id: `skill-${Date.now()}`, order: memorySkills.length + 1 } as SkillCategory;
+    targetId = `skill-${Date.now()}`;
+    const newItem = { ...item, id: targetId, order: memorySkills.length + 1 } as SkillCategory;
     memorySkills.push(newItem);
   }
   setLocalCache("portfolio_skills", memorySkills);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
-    if (item.id) {
-      await updateDoc(doc(db, "skills", item.id), item);
-    } else {
-      await addDoc(collection(db, "skills"), item);
-    }
+    const payload = cleanPayload(item);
+    await setDoc(doc(db, "skills", targetId), payload, { merge: true });
     return true;
   } catch (err) {
     console.error("Firestore skill save error:", err);
