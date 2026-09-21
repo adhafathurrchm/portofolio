@@ -104,8 +104,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onNavigate })
               </p>
             </div>
           )}
-
-          <div className="absolute inset-4 border-2 border-dashed border-amber-400/30 pointer-events-none rounded-xl z-10" />
         </motion.div>
       </div>
     </section>
