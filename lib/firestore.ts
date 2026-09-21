@@ -40,22 +40,46 @@ let memorySkills: SkillCategory[] = [...initialSkills];
 let memoryTestimonials: Testimonial[] = [];
 let memoryMessages: ContactMessage[] = [];
 
+function getLocalCache<T>(key: string): T | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setLocalCache<T>(key: string, data: T): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (e) {
+    console.warn("Failed to save to localStorage:", e);
+  }
+}
+
 export async function getProfileData(): Promise<Profile> {
-  if (!isFirebaseConfigured || !db) return memoryProfile;
+  const cached = getLocalCache<Profile>("portfolio_profile");
+  if (!isFirebaseConfigured || !db) return cached || memoryProfile;
   try {
     const docRef = doc(db, "profile", "main");
     const snap = await getDoc(docRef);
     if (snap.exists()) {
-      return snap.data() as Profile;
+      const data = snap.data() as Profile;
+      memoryProfile = { ...data };
+      setLocalCache("portfolio_profile", data);
+      return data;
     }
   } catch (err) {
     console.warn("Firestore profile fetch error, using fallback:", err);
   }
-  return memoryProfile;
+  return cached || memoryProfile;
 }
 
 export async function saveProfileData(profile: Profile): Promise<boolean> {
   memoryProfile = { ...profile };
+  setLocalCache("portfolio_profile", profile);
   if (!isFirebaseConfigured || !db) return true;
   try {
     const docRef = doc(db, "profile", "main");
@@ -68,17 +92,21 @@ export async function saveProfileData(profile: Profile): Promise<boolean> {
 }
 
 export async function getServicesData(): Promise<Service[]> {
-  if (!isFirebaseConfigured || !db) return memoryServices;
+  const cached = getLocalCache<Service[]>("portfolio_services");
+  if (!isFirebaseConfigured || !db) return cached || memoryServices;
   try {
     const q = query(collection(db, "services"), orderBy("order", "asc"));
     const snap = await getDocs(q);
     if (!snap.empty) {
-      return snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as Service));
+      const data = snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as Service));
+      memoryServices = [...data];
+      setLocalCache("portfolio_services", data);
+      return data;
     }
   } catch (err) {
     console.warn("Firestore services fetch error:", err);
   }
-  return memoryServices;
+  return cached || memoryServices;
 }
 
 export async function saveServiceItem(service: Partial<Service>): Promise<boolean> {
@@ -88,6 +116,7 @@ export async function saveServiceItem(service: Partial<Service>): Promise<boolea
     const newService = { ...service, id: `serv-${Date.now()}`, order: memoryServices.length + 1 } as Service;
     memoryServices.push(newService);
   }
+  setLocalCache("portfolio_services", memoryServices);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
@@ -105,6 +134,7 @@ export async function saveServiceItem(service: Partial<Service>): Promise<boolea
 
 export async function deleteServiceItem(id: string): Promise<boolean> {
   memoryServices = memoryServices.filter((s) => s.id !== id);
+  setLocalCache("portfolio_services", memoryServices);
   if (!isFirebaseConfigured || !db) return true;
   try {
     await deleteDoc(doc(db, "services", id));
@@ -117,17 +147,21 @@ export async function deleteServiceItem(id: string): Promise<boolean> {
 
 // 3. Resume Items Helpers (Education, Experience, Organization, Award)
 export async function getResumeData(): Promise<ResumeItem[]> {
-  if (!isFirebaseConfigured || !db) return memoryResumeItems;
+  const cached = getLocalCache<ResumeItem[]>("portfolio_resume");
+  if (!isFirebaseConfigured || !db) return cached || memoryResumeItems;
   try {
     const q = query(collection(db, "resume"), orderBy("order", "asc"));
     const snap = await getDocs(q);
     if (!snap.empty) {
-      return snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as ResumeItem));
+      const data = snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as ResumeItem));
+      memoryResumeItems = [...data];
+      setLocalCache("portfolio_resume", data);
+      return data;
     }
   } catch (err) {
     console.warn("Firestore resume fetch error:", err);
   }
-  return memoryResumeItems;
+  return cached || memoryResumeItems;
 }
 
 export async function saveResumeItem(item: Partial<ResumeItem>): Promise<boolean> {
@@ -137,6 +171,7 @@ export async function saveResumeItem(item: Partial<ResumeItem>): Promise<boolean
     const newItem = { ...item, id: `res-${Date.now()}`, order: memoryResumeItems.length + 1 } as ResumeItem;
     memoryResumeItems.push(newItem);
   }
+  setLocalCache("portfolio_resume", memoryResumeItems);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
@@ -154,6 +189,7 @@ export async function saveResumeItem(item: Partial<ResumeItem>): Promise<boolean
 
 export async function deleteResumeItem(id: string): Promise<boolean> {
   memoryResumeItems = memoryResumeItems.filter((r) => r.id !== id);
+  setLocalCache("portfolio_resume", memoryResumeItems);
   if (!isFirebaseConfigured || !db) return true;
   try {
     await deleteDoc(doc(db, "resume", id));
@@ -166,17 +202,21 @@ export async function deleteResumeItem(id: string): Promise<boolean> {
 
 // 4. Portfolio Projects Helpers
 export async function getProjectsData(): Promise<PortfolioProject[]> {
-  if (!isFirebaseConfigured || !db) return memoryProjects;
+  const cached = getLocalCache<PortfolioProject[]>("portfolio_projects");
+  if (!isFirebaseConfigured || !db) return cached || memoryProjects;
   try {
     const q = query(collection(db, "portfolio"), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
     if (!snap.empty) {
-      return snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as PortfolioProject));
+      const data = snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as PortfolioProject));
+      memoryProjects = [...data];
+      setLocalCache("portfolio_projects", data);
+      return data;
     }
   } catch (err) {
     console.warn("Firestore portfolio fetch error:", err);
   }
-  return memoryProjects;
+  return cached || memoryProjects;
 }
 
 export async function saveProjectData(project: Partial<PortfolioProject>): Promise<boolean> {
@@ -186,6 +226,7 @@ export async function saveProjectData(project: Partial<PortfolioProject>): Promi
     const newProj = { ...project, id: `proj-${Date.now()}`, createdAt: Date.now() } as PortfolioProject;
     memoryProjects.unshift(newProj);
   }
+  setLocalCache("portfolio_projects", memoryProjects);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
@@ -203,6 +244,7 @@ export async function saveProjectData(project: Partial<PortfolioProject>): Promi
 
 export async function deleteProjectData(id: string): Promise<boolean> {
   memoryProjects = memoryProjects.filter((p) => p.id !== id);
+  setLocalCache("portfolio_projects", memoryProjects);
   if (!isFirebaseConfigured || !db) return true;
   try {
     await deleteDoc(doc(db, "portfolio", id));
@@ -279,17 +321,21 @@ export async function deleteContactMessage(id: string): Promise<boolean> {
 
 // 7. Competencies Helpers
 export async function getCompetenciesData(): Promise<Competency[]> {
-  if (!isFirebaseConfigured || !db) return memoryCompetencies;
+  const cached = getLocalCache<Competency[]>("portfolio_competencies");
+  if (!isFirebaseConfigured || !db) return cached || memoryCompetencies;
   try {
     const q = query(collection(db, "competencies"), orderBy("order", "asc"));
     const snap = await getDocs(q);
     if (!snap.empty) {
-      return snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as Competency));
+      const data = snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as Competency));
+      memoryCompetencies = [...data];
+      setLocalCache("portfolio_competencies", data);
+      return data;
     }
   } catch (err) {
     console.warn("Firestore competencies fetch error:", err);
   }
-  return memoryCompetencies;
+  return cached || memoryCompetencies;
 }
 
 export async function saveCompetencyItem(item: Partial<Competency>): Promise<boolean> {
@@ -299,6 +345,7 @@ export async function saveCompetencyItem(item: Partial<Competency>): Promise<boo
     const newItem = { ...item, id: `comp-${Date.now()}`, order: memoryCompetencies.length + 1 } as Competency;
     memoryCompetencies.push(newItem);
   }
+  setLocalCache("portfolio_competencies", memoryCompetencies);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
@@ -316,6 +363,7 @@ export async function saveCompetencyItem(item: Partial<Competency>): Promise<boo
 
 export async function deleteCompetencyItem(id: string): Promise<boolean> {
   memoryCompetencies = memoryCompetencies.filter((c) => c.id !== id);
+  setLocalCache("portfolio_competencies", memoryCompetencies);
   if (!isFirebaseConfigured || !db) return true;
   try {
     await deleteDoc(doc(db, "competencies", id));
@@ -328,17 +376,21 @@ export async function deleteCompetencyItem(id: string): Promise<boolean> {
 
 // 8. Skills Helpers
 export async function getSkillsData(): Promise<SkillCategory[]> {
-  if (!isFirebaseConfigured || !db) return memorySkills;
+  const cached = getLocalCache<SkillCategory[]>("portfolio_skills");
+  if (!isFirebaseConfigured || !db) return cached || memorySkills;
   try {
     const q = query(collection(db, "skills"), orderBy("order", "asc"));
     const snap = await getDocs(q);
     if (!snap.empty) {
-      return snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as SkillCategory));
+      const data = snap.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() } as SkillCategory));
+      memorySkills = [...data];
+      setLocalCache("portfolio_skills", data);
+      return data;
     }
   } catch (err) {
     console.warn("Firestore skills fetch error:", err);
   }
-  return memorySkills;
+  return cached || memorySkills;
 }
 
 export async function saveSkillItem(item: Partial<SkillCategory>): Promise<boolean> {
@@ -348,6 +400,7 @@ export async function saveSkillItem(item: Partial<SkillCategory>): Promise<boole
     const newItem = { ...item, id: `skill-${Date.now()}`, order: memorySkills.length + 1 } as SkillCategory;
     memorySkills.push(newItem);
   }
+  setLocalCache("portfolio_skills", memorySkills);
 
   if (!isFirebaseConfigured || !db) return true;
   try {
@@ -365,6 +418,7 @@ export async function saveSkillItem(item: Partial<SkillCategory>): Promise<boole
 
 export async function deleteSkillItem(id: string): Promise<boolean> {
   memorySkills = memorySkills.filter((s) => s.id !== id);
+  setLocalCache("portfolio_skills", memorySkills);
   if (!isFirebaseConfigured || !db) return true;
   try {
     await deleteDoc(doc(db, "skills", id));
@@ -374,3 +428,4 @@ export async function deleteSkillItem(id: string): Promise<boolean> {
     return false;
   }
 }
+
