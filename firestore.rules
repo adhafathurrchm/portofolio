@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function: Memeriksa apakah pengguna sudah login sebagai Admin
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // 1. Profile: Publik bisa membaca, hanya Admin yang bisa mengubah
+    match /profile/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 2. Services: Publik bisa membaca, hanya Admin yang bisa mengubah
+    match /services/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 3. Resume (Education, Experience, Organization, Award): Publik bisa membaca, hanya Admin yang bisa mengubah
+    match /resume/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 4. Portfolio Projects: Publik bisa membaca, hanya Admin yang bisa mengubah
+    match /portfolio/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 5. Competencies / Sertifikasi: Publik bisa membaca, hanya Admin yang bisa mengubah
+    match /competencies/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 6. Testimonials: Publik bisa membaca, hanya Admin yang bisa mengubah
+    match /testimonials/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 7. Contact Messages: Siapa saja bisa mengirim pesan, tetapi hanya Admin yang bisa membaca/menghapus
+    match /contact_messages/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
