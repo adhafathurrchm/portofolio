@@ -22,6 +22,7 @@ export interface Profile {
   highlightWords: string;
   roleBadges: string[];
   bio: string;
+  heroDescription?: string;
   avatarUrl: string;
   heroImageUrl: string;
   stats: ProfileStats;

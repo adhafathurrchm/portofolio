@@ -7,6 +7,7 @@ export const initialProfile: Profile = {
   highlightWords: "Fathur.r",
   roleBadges: ["MAHASISWA TEKNIK TELEKOMUNIKASI", "IOT & NETWORKING"],
   bio: "Saya adalah mahasiswa Teknik Telekomunikasi di Politeknik Negeri Semarang dengan fokus pada jaringan komputer, telekomunikasi, dan sistem perangkat keras IoT.",
+  heroDescription: "Mahasiswa Teknik Telekomunikasi di Politeknik Negeri Semarang. Berhasrat tinggi dalam mengembangkan solusi teknologi inovatif dengan fokus kuat pada jaringan komputer, telekomunikasi, rekayasa perangkat keras IoT, dan transformasi digital.",
   avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
   heroImageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
   stats: {

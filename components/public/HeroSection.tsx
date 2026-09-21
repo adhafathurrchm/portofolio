@@ -66,7 +66,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onNavigate })
           </div>
 
           <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-lg">
-            {profile.bio}
+            {profile.heroDescription || profile.bio}
           </p>
 
           <div className="pt-4">

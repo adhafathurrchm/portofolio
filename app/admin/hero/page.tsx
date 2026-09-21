@@ -149,6 +149,22 @@ export default function AdminHeroPage() {
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1">
+              DESKRIPSI RINGKAS HALAMAN AWAL (HERO DESCRIPTION)
+            </label>
+            <textarea
+              rows={3}
+              value={profile.heroDescription || ''}
+              onChange={(e) => setProfile({ ...profile, heroDescription: e.target.value })}
+              placeholder="Tuliskan deskripsi ringkas pembuka untuk layar pertama/hero section..."
+              className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400 resize-none"
+            />
+            <p className="text-[10px] text-gray-400 mt-1">
+              Deskripsi ini tampil di layar pertama (Hero), terpisah dari deskripsi bio di bagian Tentang Saya.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1">
               URL FOTO HERO (MENDUKUNG GDRIVE & LINK DIRECT)
             </label>
             <input
