@@ -191,7 +191,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col relative">
+    <div className="min-h-screen bg-gray-100 flex flex-col relative lg:pr-16 overflow-x-hidden">
       <div className="fixed top-4 right-4 lg:right-20 z-40">
         <LanguageSwitcher />
       </div>
@@ -207,7 +207,7 @@ export default function HomePage() {
         onNavigate={handleNavigate}
       />
 
-      <main className="flex-1 lg:mr-16 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto w-full">
+      <main className="flex-1 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto w-full">
         <HeroSection profile={profile} onNavigate={handleNavigate} />
         <AboutSection profile={profile} services={services} skills={skills} />
         <CompetencySection competencies={competencies} />
