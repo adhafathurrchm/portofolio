@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { getResumeData, saveResumeItem, deleteResumeItem } from '@/lib/firestore';
 import { ResumeItem, ResumeCategory } from '@/types';
-import { Plus, Trash2, Edit2, Save, X, GraduationCap, Briefcase, Users, Award } from 'lucide-react';
+import { Plus, Trash2, Edit2, Save, X, GraduationCap, Briefcase, Users, Award, ArrowUp, ArrowDown } from 'lucide-react';
 
 const categories: { id: ResumeCategory; label: string; icon: React.ElementType }[] = [
   { id: 'EXPERIENCE', label: 'Pengalaman', icon: Briefcase },
@@ -36,6 +36,7 @@ export default function AdminResumePage() {
     const success = await saveResumeItem({
       ...editingItem,
       category: editingItem.category || activeTab,
+      order: editingItem.order ?? items.length + 1,
     });
 
     if (success) {
@@ -51,7 +52,30 @@ export default function AdminResumePage() {
     }
   };
 
-  const filteredItems = items.filter((item) => item.category === activeTab);
+  const handleMove = async (index: number, direction: 'up' | 'down') => {
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= filteredItems.length) return;
+
+    const currentItem = filteredItems[index];
+    const targetItem = filteredItems[targetIndex];
+
+    const currentOrder = currentItem.order ?? (index + 1);
+    const targetOrder = targetItem.order ?? (targetIndex + 1);
+
+    const newCurrentOrder = currentOrder === targetOrder ? (direction === 'up' ? targetOrder - 1 : targetOrder + 1) : targetOrder;
+    const newTargetOrder = currentOrder === targetOrder ? targetOrder : currentOrder;
+
+    await Promise.all([
+      saveResumeItem({ ...currentItem, order: newCurrentOrder }),
+      saveResumeItem({ ...targetItem, order: newTargetOrder }),
+    ]);
+
+    fetchResume();
+  };
+
+  const filteredItems = items
+    .filter((item) => item.category === activeTab)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   return (
     <div className="space-y-8 max-w-5xl">
@@ -61,7 +85,7 @@ export default function AdminResumePage() {
             PENGELOLA <span className="text-amber-400">RIWAYAT</span>
           </h1>
           <p className="text-xs text-gray-400 mt-1">
-            Kelola riwayat Pendidikan, Pengalaman Kerja, Organisasi, dan Penghargaan.
+            Kelola dan atur urutan riwayat Pendidikan, Pengalaman Kerja, Organisasi, dan Penghargaan.
           </p>
         </div>
 
@@ -73,7 +97,7 @@ export default function AdminResumePage() {
               subtitle: '',
               period: '',
               description: '',
-              order: items.length + 1,
+              order: filteredItems.length + 1,
             })
           }
           className="bg-amber-400 hover:bg-amber-500 text-black font-extrabold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-lg flex items-center space-x-2 transition-all hover:scale-105"
@@ -151,7 +175,7 @@ export default function AdminResumePage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
                 PERIODE / TAHUN *
@@ -181,6 +205,18 @@ export default function AdminResumePage() {
                 <option value="AWARD">PENGHARGAAN</option>
               </select>
             </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                NOMOR URUTAN (ORDER)
+              </label>
+              <input
+                type="number"
+                value={editingItem.order ?? 1}
+                onChange={(e) => setEditingItem({ ...editingItem, order: parseInt(e.target.value) || 1 })}
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"
+              />
+            </div>
           </div>
 
           <div>
@@ -194,9 +230,6 @@ export default function AdminResumePage() {
               placeholder="https://drive.google.com/file/d/... atau https://..."
               className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"
             />
-            <p className="text-[10px] text-gray-400 mt-1">
-              Link foto/logo opsional (misal: untuk Organisasi atau Penghargaan). Link Google Drive otomatis dikonversi!
-            </p>
           </div>
 
           <div>
@@ -242,15 +275,20 @@ export default function AdminResumePage() {
             Belum ada item dalam kategori ini. Klik "TAMBAH ITEM RIWAYAT" di atas.
           </div>
         ) : (
-          filteredItems.map((item) => (
+          filteredItems.map((item, idx) => (
             <div
               key={item.id}
               className="bg-black p-6 rounded-2xl border border-gray-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-amber-400/50 transition-colors"
             >
               <div className="space-y-1">
-                <span className="inline-block bg-amber-400 text-black text-[10px] font-extrabold px-2.5 py-0.5 uppercase tracking-widest rounded-sm">
-                  {item.period}
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className="bg-amber-400 text-black text-[10px] font-extrabold px-2.5 py-0.5 uppercase tracking-widest rounded-sm">
+                    {item.period}
+                  </span>
+                  <span className="bg-gray-800 text-amber-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-sm">
+                    Urutan: #{item.order ?? (idx + 1)}
+                  </span>
+                </div>
                 <h3 className="text-base font-extrabold text-white uppercase tracking-wide">
                   {item.title}
                 </h3>
@@ -263,6 +301,22 @@ export default function AdminResumePage() {
               </div>
 
               <div className="flex items-center space-x-2 flex-shrink-0">
+                <button
+                  onClick={() => handleMove(idx, 'up')}
+                  disabled={idx === 0}
+                  className="p-2 bg-gray-900 hover:bg-gray-800 disabled:opacity-30 text-amber-400 rounded-lg transition-colors"
+                  title="Pindah ke Atas"
+                >
+                  <ArrowUp size={18} />
+                </button>
+                <button
+                  onClick={() => handleMove(idx, 'down')}
+                  disabled={idx === filteredItems.length - 1}
+                  className="p-2 bg-gray-900 hover:bg-gray-800 disabled:opacity-30 text-amber-400 rounded-lg transition-colors"
+                  title="Pindah ke Bawah"
+                >
+                  <ArrowDown size={18} />
+                </button>
                 <button
                   onClick={() => setEditingItem(item)}
                   className="p-2 bg-gray-900 hover:bg-gray-800 text-amber-400 rounded-lg transition-colors"
