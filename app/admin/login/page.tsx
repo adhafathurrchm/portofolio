@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const { login, demoLogin } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
     if (success) {
       router.push('/admin');
     } else {
-      setError('Kredensial tidak valid. Gunakan akun Firebase Auth atau tombol Masuk Demo Instan di bawah.');
+      setError('Kredensial tidak valid. Silakan periksa kembali email dan kata sandi Anda.');
     }
   };
 
@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
             MASUK PANEL ADMIN CMS
           </h1>
           <p className="text-xs text-gray-400 mt-1">
-            Masuk untuk mengelola seluruh konten portofolio Anda
+            Masuk dengan kredensial admin untuk mengelola portofolio
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@example.com"
+                placeholder="dfadha1923@gmail.com"
                 className="w-full bg-black border border-gray-800 rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400 transition-colors"
               />
             </div>
@@ -98,26 +98,6 @@ export default function AdminLoginPage() {
             <ArrowRight size={16} />
           </button>
         </form>
-
-        {/* Divider */}
-        <div className="relative my-6 text-center">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-800" />
-          </div>
-          <span className="relative bg-gray-900 px-3 text-[10px] uppercase font-bold text-gray-500 tracking-widest">
-            ATAU UJI COBA DEMO
-          </span>
-        </div>
-
-        {/* Instant Demo Login Button */}
-        <button
-          type="button"
-          onClick={demoLogin}
-          className="w-full bg-gray-800 hover:bg-gray-700 text-amber-400 font-bold py-3 rounded-full text-xs uppercase tracking-wider border border-amber-400/30 flex items-center justify-center space-x-2 hover:scale-[1.02] transition-all"
-        >
-          <Sparkles size={16} />
-          <span>MASUK DEMO INSTAN</span>
-        </button>
       </div>
     </div>
   );

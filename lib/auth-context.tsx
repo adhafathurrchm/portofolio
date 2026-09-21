@@ -10,7 +10,6 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, pass: string) => Promise<boolean>;
   logout: () => Promise<void>;
-  demoLogin: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -18,7 +17,6 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   login: async () => false,
   logout: async () => {},
-  demoLogin: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -27,16 +25,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Check local storage demo session fallback
+    // Check local storage session fallback
     if (typeof window !== "undefined") {
-      const localDemoUser = localStorage.getItem("demo_admin_user");
-      if (localDemoUser) {
+      const localAdminUser = localStorage.getItem("admin_user");
+      if (localAdminUser) {
         try {
-          setUser(JSON.parse(localDemoUser));
+          setUser(JSON.parse(localAdminUser));
           setLoading(false);
           return;
         } catch {
-          localStorage.removeItem("demo_admin_user");
+          localStorage.removeItem("admin_user");
         }
       }
     }
@@ -55,7 +53,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (email: string, pass: string): Promise<boolean> => {
-    const cleanEmail = email.trim();
+    const cleanEmail = email.trim().toLowerCase();
+    
+    // Check mandatory admin credentials: dfadha1923@gmail.com / 11
+    if (cleanEmail === "dfadha1923@gmail.com" && pass === "11") {
+      const adminUser = { email: "dfadha1923@gmail.com", displayName: "Adha Dwi Fathur" };
+      setUser(adminUser);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("admin_user", JSON.stringify(adminUser));
+      }
+      return true;
+    }
+
     if (isFirebaseConfigured && auth !== null) {
       try {
         await signInWithEmailAndPassword(auth!, cleanEmail, pass);
@@ -65,25 +74,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    // Demo admin login fallback for testing
-    if (email === "admin@example.com" && pass === "admin123") {
-      const demoUser = { email: "admin@example.com", displayName: "Admin User" };
-      setUser(demoUser);
-      if (typeof window !== "undefined") {
-        localStorage.setItem("demo_admin_user", JSON.stringify(demoUser));
-      }
-      return true;
-    }
     return false;
-  };
-
-  const demoLogin = () => {
-    const demoUser = { email: "admin@example.com", displayName: "Admin User" };
-    setUser(demoUser);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("demo_admin_user", JSON.stringify(demoUser));
-    }
-    router.push("/admin");
   };
 
   const logout = async () => {
@@ -96,13 +87,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setUser(null);
     if (typeof window !== "undefined") {
-      localStorage.removeItem("demo_admin_user");
+      localStorage.removeItem("admin_user");
     }
     router.push("/admin/login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, demoLogin }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
