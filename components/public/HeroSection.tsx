@@ -50,7 +50,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onNavigate })
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black uppercase tracking-tight leading-none">
-            I'M {renderStyledName(profile?.fullName || '', profile?.highlightWords || '')}
+            {(profile?.namePrefix ?? "I'M") ? `${profile?.namePrefix ?? "I'M"} ` : ''}
+            {renderStyledName(profile?.fullName || '', profile?.highlightWords || '')}
           </h1>
 
           <div className="flex flex-wrap gap-2">

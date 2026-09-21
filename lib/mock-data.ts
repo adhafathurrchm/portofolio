@@ -2,6 +2,7 @@ import { Profile, Service, ResumeItem, PortfolioProject, Competency, SkillCatego
 
 export const initialProfile: Profile = {
   greeting: "HALO, SAYA",
+  namePrefix: "I'M",
   fullName: "Adha Dwi Fathur.r",
   highlightWords: "Fathur.r",
   roleBadges: ["MAHASISWA TEKNIK TELEKOMUNIKASI", "IOT & NETWORKING"],

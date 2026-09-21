@@ -7,6 +7,7 @@ import { Save, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function AdminProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [namePrefixInput, setNamePrefixInput] = useState("I'M");
   const [roleBadgesInput, setRoleBadgesInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -16,6 +17,7 @@ export default function AdminProfilePage() {
     async function fetchProfile() {
       const data = await getProfileData();
       setProfile(data);
+      setNamePrefixInput(data.namePrefix ?? "I'M");
       setRoleBadgesInput(data.roleBadges.join(', '));
       setLoading(false);
     }
@@ -31,6 +33,7 @@ export default function AdminProfilePage() {
 
     const updatedProfile: Profile = {
       ...profile,
+      namePrefix: namePrefixInput.trim(),
       roleBadges: roleBadgesInput.split(',').map((s) => s.trim()).filter(Boolean),
     };
 
@@ -60,7 +63,14 @@ export default function AdminProfilePage() {
           PENGELOLA PROFIL & <span className="text-amber-400">BIO</span>
         </h1>
         <p className="text-xs text-gray-400 mt-1">
-          Edit informasi pribadi publik, paragraf bio, lencana peran, dan media foto Anda.
+          Edit seluruh informasi pribadi publik. Anda juga dapat mengelola menu khusus{' '}
+          <a href="/admin/hero" className="text-amber-400 font-bold underline">
+            Edit Halaman Awal (Hero)
+          </a>{' '}
+          dan{' '}
+          <a href="/admin/about" className="text-amber-400 font-bold underline">
+            Edit Tentang Saya (Bio)
+          </a>.
         </p>
       </div>
 
@@ -71,7 +81,7 @@ export default function AdminProfilePage() {
             1. IDENTITAS DIRI
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1">
                 TEKS SAPAAN (GREETING)
@@ -80,6 +90,19 @@ export default function AdminProfilePage() {
                 type="text"
                 value={profile.greeting}
                 onChange={(e) => setProfile({ ...profile, greeting: e.target.value })}
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1">
+                AWALAN NAMA (PREFIX)
+              </label>
+              <input
+                type="text"
+                value={namePrefixInput}
+                onChange={(e) => setNamePrefixInput(e.target.value)}
+                placeholder="misal: I'M atau SAYA"
                 className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400"
               />
             </div>

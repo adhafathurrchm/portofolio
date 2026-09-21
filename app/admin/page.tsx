@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { User, FileText, Briefcase, Mail, ArrowUpRight, Layers, Cpu, Award } from 'lucide-react';
+import { User, Home, FileText, Briefcase, Mail, ArrowUpRight, Layers, Cpu, Award } from 'lucide-react';
 import { getProjectsData, getResumeData, getContactMessages, getProfileData, getServicesData } from '@/lib/firestore';
 import { Profile } from '@/types';
 
@@ -109,16 +109,32 @@ export default function AdminDashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
-          href="/admin/profile"
+          href="/admin/hero"
+          className="bg-black p-6 rounded-2xl border border-gray-800 hover:border-amber-400 transition-all duration-300 group flex items-start justify-between shadow-lg"
+        >
+          <div>
+            <h3 className="text-lg font-extrabold text-white group-hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-2">
+              <Home size={20} />
+              <span>EDIT HALAMAN AWAL (HERO)</span>
+            </h3>
+            <p className="text-xs text-gray-400 mt-2">
+              Perbarui teks sapaan, awalan nama (I'M/SAYA), nama lengkap, kata sorotan, lencana peran, dan foto hero.
+            </p>
+          </div>
+          <ArrowUpRight size={24} className="text-gray-500 group-hover:text-amber-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+        </Link>
+
+        <Link
+          href="/admin/about"
           className="bg-black p-6 rounded-2xl border border-gray-800 hover:border-amber-400 transition-all duration-300 group flex items-start justify-between shadow-lg"
         >
           <div>
             <h3 className="text-lg font-extrabold text-white group-hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-2">
               <User size={20} />
-              <span>PENGELOLA PROFIL & BIO</span>
+              <span>EDIT TENTANG SAYA (BIO)</span>
             </h3>
             <p className="text-xs text-gray-400 mt-2">
-              Perbarui nama lengkap, bio, foto hero/avatar, lencana peran, dan detail kontak Anda.
+              Perbarui paragraf deskripsi diri (bio), foto avatar profil, serta alamat kontak dan link media sosial Anda.
             </p>
           </div>
           <ArrowUpRight size={24} className="text-gray-500 group-hover:text-amber-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />

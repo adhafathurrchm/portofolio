@@ -17,6 +17,7 @@ export interface ContactInfo {
 
 export interface Profile {
   greeting: string;
+  namePrefix?: string;
   fullName: string;
   highlightWords: string;
   roleBadges: string[];

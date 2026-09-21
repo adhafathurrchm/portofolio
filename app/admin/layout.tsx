@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/auth-context';
 import {
   LayoutDashboard,
   User,
+  Home,
   FileText,
   Briefcase,
   Mail,
@@ -22,7 +23,8 @@ import {
 
 const adminNavItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/profile', label: 'Profil & Bio', icon: User },
+  { href: '/admin/hero', label: 'Halaman Awal (Hero)', icon: Home },
+  { href: '/admin/about', label: 'Tentang Saya (Bio)', icon: User },
   { href: '/admin/services', label: 'Apa Yang Saya Kerjakan', icon: Layers },
   { href: '/admin/skills', label: 'Keahlian', icon: Cpu },
   { href: '/admin/competencies', label: 'Sertifikasi', icon: Award },
