@@ -56,12 +56,13 @@ export default function AdminPortfolioPage() {
           onClick={() =>
             setEditingProject({
               title: '',
-              category: 'IOT',
+              category: 'TELEKOMUNIKASI',
               thumbnailUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800',
               description: '',
               projectUrl: '',
               repoUrl: '',
               featured: true,
+              showInAll: true,
             })
           }
           className="bg-amber-400 hover:bg-amber-500 text-black font-extrabold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-lg flex items-center space-x-2 transition-all hover:scale-105"
@@ -177,17 +178,32 @@ export default function AdminPortfolioPage() {
             />
           </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="featuredCheck"
-              checked={editingProject.featured || false}
-              onChange={(e) => setEditingProject({ ...editingProject, featured: e.target.checked })}
-              className="w-4 h-4 accent-amber-400 rounded"
-            />
-            <label htmlFor="featuredCheck" className="text-xs font-bold text-gray-300 uppercase">
-              Tandai sebagai Proyek Unggulan
-            </label>
+          <div className="flex flex-wrap items-center gap-6 pt-1">
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="showInAllCheck"
+                checked={editingProject.showInAll ?? true}
+                onChange={(e) => setEditingProject({ ...editingProject, showInAll: e.target.checked })}
+                className="w-4 h-4 accent-amber-400 rounded cursor-pointer"
+              />
+              <label htmlFor="showInAllCheck" className="text-xs font-bold text-amber-400 uppercase cursor-pointer">
+                TAMPILKAN DI TAB "ALL"
+              </label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="featuredCheck"
+                checked={editingProject.featured || false}
+                onChange={(e) => setEditingProject({ ...editingProject, featured: e.target.checked })}
+                className="w-4 h-4 accent-amber-400 rounded cursor-pointer"
+              />
+              <label htmlFor="featuredCheck" className="text-xs font-bold text-gray-300 uppercase cursor-pointer">
+                Tandai sebagai Unggulan
+              </label>
+            </div>
           </div>
 
           <div className="flex justify-end space-x-3 pt-2">
@@ -235,12 +251,19 @@ export default function AdminPortfolioPage() {
                 <div className="absolute top-3 left-3 bg-black/80 text-amber-400 text-[10px] font-extrabold px-2.5 py-1 uppercase tracking-widest rounded-sm">
                   {project.category}
                 </div>
-                {project.featured && (
-                  <div className="absolute top-3 right-3 bg-amber-400 text-black text-[10px] font-extrabold px-2 py-0.5 uppercase tracking-widest rounded-sm flex items-center space-x-1">
-                    <Star size={12} className="fill-black" />
-                    <span>UNGGULAN</span>
-                  </div>
-                )}
+                <div className="absolute top-3 right-3 flex items-center space-x-1">
+                  {project.showInAll !== false && (
+                    <span className="bg-black/90 text-amber-400 text-[10px] font-extrabold px-2 py-0.5 uppercase tracking-widest rounded-sm border border-amber-400/40">
+                      TAMPIL DI ALL
+                    </span>
+                  )}
+                  {project.featured && (
+                    <span className="bg-amber-400 text-black text-[10px] font-extrabold px-2 py-0.5 uppercase tracking-widest rounded-sm flex items-center space-x-1">
+                      <Star size={12} className="fill-black" />
+                      <span>UNGGULAN</span>
+                    </span>
+                  )}
+                </div>
               </div>
 
               <div className="p-5 flex-1 flex flex-col justify-between space-y-3">

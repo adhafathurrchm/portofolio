@@ -61,15 +61,22 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
     if (showAllProjects) {
       filteredProjects = projects;
     } else {
-      // Pick 1 project per unique category
-      const categoryMap = new Map<string, PortfolioProject>();
-      projects.forEach((p) => {
-        const catKey = normalizeCat(p.category);
-        if (!categoryMap.has(catKey)) {
-          categoryMap.set(catKey, p);
-        }
-      });
-      filteredProjects = Array.from(categoryMap.values());
+      // Filter projects explicitly marked to show in ALL (defaults to true if undefined)
+      const selectedForAll = projects.filter((p) => p.showInAll !== false);
+
+      if (selectedForAll.length > 0) {
+        filteredProjects = selectedForAll;
+      } else {
+        // Fallback: 1 project per unique category
+        const categoryMap = new Map<string, PortfolioProject>();
+        projects.forEach((p) => {
+          const catKey = normalizeCat(p.category);
+          if (!categoryMap.has(catKey)) {
+            categoryMap.set(catKey, p);
+          }
+        });
+        filteredProjects = Array.from(categoryMap.values());
+      }
     }
   } else {
     filteredProjects = projects.filter((p) => isMatchingCategory(p.category, selectedCategory));

@@ -69,6 +69,7 @@ export interface PortfolioProject {
   projectUrl?: string;
   repoUrl?: string;
   featured: boolean;
+  showInAll?: boolean;
   createdAt: number;
 }
 
