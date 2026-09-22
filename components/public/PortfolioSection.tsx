@@ -121,27 +121,33 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
 
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div
+            onClick={() => setSelectedProject(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+          >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl relative border-2 border-amber-400 max-h-[90vh] flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl relative border-2 border-amber-400 max-h-[90vh] flex flex-col"
             >
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 z-10 bg-black text-amber-400 w-11 h-11 flex items-center justify-center rounded-full hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="absolute top-4 right-4 z-20 bg-black/80 text-amber-400 hover:bg-amber-400 hover:text-black w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 shadow-xl border border-amber-400/40 backdrop-blur-md"
                 aria-label="Close Project Modal"
               >
                 <X size={20} />
               </button>
 
-              <div className="img-fill-container w-full h-72 sm:h-80 bg-black">
+              <div className="img-fill-container w-full h-[350px] sm:h-[500px] bg-gray-950 relative flex items-center justify-center p-3">
                 <Image
                   src={formatImageUrl(selectedProject.thumbnailUrl)}
                   alt={selectedProject.title}
                   fill
-                  className="absolute inset-0 w-full h-full object-cover"
+                  sizes="100vw"
+                  className="object-contain"
+                  priority
                 />
               </div>
 
