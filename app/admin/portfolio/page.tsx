@@ -26,6 +26,17 @@ export default function AdminPortfolioPage() {
     e.preventDefault();
     if (!editingProject || !editingProject.title || !editingProject.thumbnailUrl) return;
 
+    // If this project is selected as category representative for ALL, uncheck others in the same category
+    if (editingProject.showInAll) {
+      const currentCat = (editingProject.category || '').trim().toUpperCase();
+      const otherProjectsInCat = projects.filter(
+        (p) => p.id !== editingProject.id && (p.category || '').trim().toUpperCase() === currentCat && p.showInAll
+      );
+      for (const other of otherProjectsInCat) {
+        await saveProjectData({ ...other, showInAll: false });
+      }
+    }
+
     const success = await saveProjectData(editingProject);
     if (success) {
       setEditingProject(null);
@@ -61,8 +72,8 @@ export default function AdminPortfolioPage() {
               description: '',
               projectUrl: '',
               repoUrl: '',
-              featured: true,
-              showInAll: true,
+              featured: false,
+              showInAll: false,
             })
           }
           className="bg-amber-400 hover:bg-amber-500 text-black font-extrabold px-6 py-3 rounded-full text-xs uppercase tracking-wider shadow-lg flex items-center space-x-2 transition-all hover:scale-105"
@@ -179,16 +190,16 @@ export default function AdminPortfolioPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-6 pt-1">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 bg-amber-400/10 p-2.5 rounded-lg border border-amber-400/30">
               <input
                 type="checkbox"
                 id="showInAllCheck"
-                checked={editingProject.showInAll ?? true}
+                checked={editingProject.showInAll || false}
                 onChange={(e) => setEditingProject({ ...editingProject, showInAll: e.target.checked })}
                 className="w-4 h-4 accent-amber-400 rounded cursor-pointer"
               />
-              <label htmlFor="showInAllCheck" className="text-xs font-bold text-amber-400 uppercase cursor-pointer">
-                TAMPILKAN DI TAB "ALL"
+              <label htmlFor="showInAllCheck" className="text-xs font-black text-amber-400 uppercase cursor-pointer">
+                TAMPILKAN SEBAGAI SAMPUL KATEGORI DI TAB "ALL" (1 PER KATEGORI)
               </label>
             </div>
 
@@ -252,14 +263,14 @@ export default function AdminPortfolioPage() {
                   {project.category}
                 </div>
                 <div className="absolute top-3 right-3 flex items-center space-x-1">
-                  {project.showInAll !== false && (
-                    <span className="bg-black/90 text-amber-400 text-[10px] font-extrabold px-2 py-0.5 uppercase tracking-widest rounded-sm border border-amber-400/40">
-                      TAMPIL DI ALL
+                  {project.showInAll && (
+                    <span className="bg-amber-400 text-black text-[10px] font-black px-2 py-0.5 uppercase tracking-widest rounded-sm shadow-md">
+                      SAMPUL TAB ALL
                     </span>
                   )}
                   {project.featured && (
-                    <span className="bg-amber-400 text-black text-[10px] font-extrabold px-2 py-0.5 uppercase tracking-widest rounded-sm flex items-center space-x-1">
-                      <Star size={12} className="fill-black" />
+                    <span className="bg-gray-900 text-white text-[10px] font-extrabold px-2 py-0.5 uppercase tracking-widest rounded-sm flex items-center space-x-1 border border-gray-700">
+                      <Star size={12} className="fill-amber-400 text-amber-400" />
                       <span>UNGGULAN</span>
                     </span>
                   )}
