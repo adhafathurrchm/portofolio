@@ -90,30 +90,24 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
         <div className="w-24 h-1 bg-amber-400 mx-auto mt-4 rounded-full" />
       </motion.div>
 
-      {/* Styled Category Dropdown */}
-      <div className="flex justify-center mb-10">
-        <div className="relative inline-block w-full max-w-xs sm:max-w-md">
-          <select
-            value={selectedCategory}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
+      {/* Horizontal Category Pill Buttons */}
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+        {['All', ...predefinedCategories].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => {
+              setSelectedCategory(cat);
               setShowAllProjects(false);
             }}
-            className="w-full appearance-none bg-black text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider px-6 py-3.5 pr-12 rounded-full border-2 border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-xl cursor-pointer hover:border-amber-300 transition-colors"
+            className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 min-h-[44px] ${
+              selectedCategory === cat
+                ? 'bg-amber-400 text-black shadow-md font-extrabold scale-105'
+                : 'bg-white text-gray-700 hover:bg-black hover:text-white border border-gray-200'
+            }`}
           >
-            <option value="All" className="bg-gray-900 text-amber-400 font-extrabold">
-              SEMUA KATEGORI (ALL)
-            </option>
-            {predefinedCategories.map((cat) => (
-              <option key={cat} value={cat} className="bg-gray-900 text-white font-bold">
-                {cat}
-              </option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-amber-400">
-            <ChevronDown size={20} />
-          </div>
-        </div>
+            {cat === 'All' ? 'ALL' : cat}
+          </button>
+        ))}
       </div>
 
       <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
