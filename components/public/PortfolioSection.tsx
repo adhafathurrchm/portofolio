@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X, Eye } from 'lucide-react';
+import { ExternalLink, Github, X, Eye, ChevronDown } from 'lucide-react';
 import { PortfolioProject } from '@/types';
 import { formatImageUrl } from '@/lib/gdrive';
 
@@ -12,6 +12,7 @@ interface PortfolioSectionProps {
 export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
+  const [showAllProjects, setShowAllProjects] = useState<boolean>(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -25,12 +26,54 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedProject]);
 
-  const categories = ['All', ...Array.from(new Set(projects.map((p) => p.category)))];
+  const predefinedCategories = [
+    'TELEKOMUNIKASI',
+    'NETWORK',
+    'IOT',
+    'WEBSITE',
+    'AUDIOVISUAL',
+    'LAINNYA',
+  ];
 
-  const filteredProjects =
-    selectedCategory === 'All'
-      ? projects
-      : projects.filter((p) => p.category === selectedCategory);
+  // Helper for matching category
+  const normalizeCat = (cat: string) => cat.trim().toUpperCase();
+
+  const isMatchingCategory = (projectCat: string, targetCategory: string) => {
+    if (targetCategory === 'All') return true;
+    const pCat = normalizeCat(projectCat);
+    const tCat = normalizeCat(targetCategory);
+
+    if (pCat === tCat) return true;
+    if (tCat === 'TELEKOMUNIKASI' && (pCat.includes('TELE') || pCat.includes('TELECOM'))) return true;
+    if (tCat === 'NETWORK' && (pCat.includes('NET') || pCat.includes('JARINGAN'))) return true;
+    if (tCat === 'IOT' && (pCat.includes('IOT') || pCat.includes('INTERNET'))) return true;
+    if (tCat === 'WEBSITE' && (pCat.includes('WEB') || pCat.includes('SITE'))) return true;
+    if (tCat === 'AUDIOVISUAL' && (pCat.includes('AUDIO') || pCat.includes('VIDEO') || pCat.includes('AV'))) return true;
+    if (tCat === 'LAINNYA' && (pCat.includes('OTHER') || pCat.includes('LAIN'))) return true;
+
+    return false;
+  };
+
+  // Build list of filtered projects
+  let filteredProjects: PortfolioProject[] = [];
+
+  if (selectedCategory === 'All') {
+    if (showAllProjects) {
+      filteredProjects = projects;
+    } else {
+      // Pick 1 project per unique category
+      const categoryMap = new Map<string, PortfolioProject>();
+      projects.forEach((p) => {
+        const catKey = normalizeCat(p.category);
+        if (!categoryMap.has(catKey)) {
+          categoryMap.set(catKey, p);
+        }
+      });
+      filteredProjects = Array.from(categoryMap.values());
+    }
+  } else {
+    filteredProjects = projects.filter((p) => isMatchingCategory(p.category, selectedCategory));
+  }
 
   return (
     <section id="portfolio" className="py-16">
@@ -39,7 +82,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-12"
+        className="text-center mb-10"
       >
         <h2 className="text-4xl sm:text-5xl font-black text-black uppercase tracking-widest">
           PORT<span className="text-amber-500">FOLIO</span>
@@ -47,20 +90,30 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
         <div className="w-24 h-1 bg-amber-400 mx-auto mt-4 rounded-full" />
       </motion.div>
 
-      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 min-h-[44px] ${
-              selectedCategory === cat
-                ? 'bg-amber-400 text-black shadow-md font-extrabold scale-105'
-                : 'bg-white text-gray-700 hover:bg-black hover:text-white border border-gray-200'
-            }`}
+      {/* Styled Category Dropdown */}
+      <div className="flex justify-center mb-10">
+        <div className="relative inline-block w-full max-w-xs sm:max-w-md">
+          <select
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setShowAllProjects(false);
+            }}
+            className="w-full appearance-none bg-black text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider px-6 py-3.5 pr-12 rounded-full border-2 border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-xl cursor-pointer hover:border-amber-300 transition-colors"
           >
-            {cat}
-          </button>
-        ))}
+            <option value="All" className="bg-gray-900 text-amber-400 font-extrabold">
+              SEMUA KATEGORI (ALL)
+            </option>
+            {predefinedCategories.map((cat) => (
+              <option key={cat} value={cat} className="bg-gray-900 text-white font-bold">
+                {cat}
+              </option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-amber-400">
+            <ChevronDown size={20} />
+          </div>
+        </div>
       </div>
 
       <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -118,6 +171,30 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ projects }) 
           })}
         </AnimatePresence>
       </motion.div>
+
+      {/* Button "Lihat Semua" when in All category mode */}
+      {selectedCategory === 'All' && projects.length > filteredProjects.length && !showAllProjects && (
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAllProjects(true)}
+            className="bg-amber-400 hover:bg-amber-500 text-black font-extrabold px-8 py-3.5 rounded-full text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+          >
+            <span>LIHAT SEMUA</span>
+            <ChevronDown size={18} />
+          </button>
+        </div>
+      )}
+
+      {selectedCategory === 'All' && showAllProjects && projects.length > 6 && (
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAllProjects(false)}
+            className="bg-black hover:bg-gray-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-full text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:scale-105 transition-all duration-300 border-2 border-amber-400 flex items-center space-x-2 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            <span>TAMPILKAN LEBIH SEDIKIT</span>
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {selectedProject && (

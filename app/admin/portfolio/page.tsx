@@ -106,14 +106,19 @@ export default function AdminPortfolioPage() {
               <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
                 KATEGORI PROYEK *
               </label>
-              <input
-                type="text"
+              <select
                 required
-                value={editingProject.category || ''}
+                value={editingProject.category || 'TELEKOMUNIKASI'}
                 onChange={(e) => setEditingProject({ ...editingProject, category: e.target.value })}
-                placeholder="misal: IOT / NETWORKING / DESAIN"
-                className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"
-              />
+                className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 font-bold"
+              >
+                <option value="TELEKOMUNIKASI">TELEKOMUNIKASI</option>
+                <option value="NETWORK">NETWORK</option>
+                <option value="IOT">IOT</option>
+                <option value="WEBSITE">WEBSITE</option>
+                <option value="AUDIOVISUAL">AUDIOVISUAL</option>
+                <option value="LAINNYA">LAINNYA</option>
+              </select>
             </div>
           </div>
 
