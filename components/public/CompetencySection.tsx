@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, ExternalLink, Maximize2, X, CheckCircle2 } from 'lucide-react';
+import { Award, ExternalLink, Maximize2, X, CheckCircle2, ChevronDown } from 'lucide-react';
 import { Competency } from '@/types';
 import { formatImageUrl } from '@/lib/gdrive';
 
@@ -11,6 +11,21 @@ interface CompetencySectionProps {
 
 export const CompetencySection: React.FC<CompetencySectionProps> = ({ competencies }) => {
   const [selectedCert, setSelectedCert] = useState<Competency | null>(null);
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const [visibleLimit, setVisibleLimit] = useState<number>(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleLimit(3);
+      } else {
+        setVisibleLimit(4);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -23,6 +38,8 @@ export const CompetencySection: React.FC<CompetencySectionProps> = ({ competenci
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedCert]);
+
+  const displayedCompetencies = showAll ? competencies : competencies.slice(0, visibleLimit);
 
   return (
     <section id="kompetensi" className="py-16">
@@ -43,7 +60,7 @@ export const CompetencySection: React.FC<CompetencySectionProps> = ({ competenci
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {competencies.map((item, idx) => {
+        {displayedCompetencies.map((item, idx) => {
           const certImg = formatImageUrl(item.imageUrl);
 
           return (
@@ -122,6 +139,29 @@ export const CompetencySection: React.FC<CompetencySectionProps> = ({ competenci
           );
         })}
       </div>
+
+      {competencies.length > visibleLimit && !showAll && (
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAll(true)}
+            className="bg-amber-400 hover:bg-amber-500 text-black font-extrabold px-8 py-3.5 rounded-full text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+          >
+            <span>LIHAT SEMUA</span>
+            <ChevronDown size={18} />
+          </button>
+        </div>
+      )}
+
+      {showAll && competencies.length > visibleLimit && (
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAll(false)}
+            className="bg-black hover:bg-gray-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-full text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:scale-105 transition-all duration-300 border-2 border-amber-400 flex items-center space-x-2 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            <span>TAMPILKAN LEBIH SEDIKIT</span>
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {selectedCert && (

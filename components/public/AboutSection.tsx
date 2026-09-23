@@ -109,8 +109,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile, services, s
                         <IconComp size={20} />
                       </div>
                       <div>
-                        <h4 className="text-sm font-black text-black uppercase tracking-wide">{skillCat.title}</h4>
-                        <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">{skillCat.subtitle}</span>
+                        <h4 className="text-base font-extrabold text-black uppercase tracking-wide leading-snug">{skillCat.title}</h4>
+                        <span className="text-[11px] font-extrabold text-amber-600 uppercase tracking-widest">{skillCat.subtitle}</span>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-2">

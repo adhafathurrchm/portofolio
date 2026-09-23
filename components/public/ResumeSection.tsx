@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Briefcase, Users, Award, Eye, X, Maximize2 } from 'lucide-react';
+import { GraduationCap, Briefcase, Users, Award, Eye, X, Maximize2, ChevronDown } from 'lucide-react';
 import { ResumeItem, ResumeCategory } from '@/types';
 import { formatImageUrl } from '@/lib/gdrive';
 
@@ -21,6 +21,26 @@ const categories: { id: ResumeCategory; label: string; icon: React.ElementType }
 export const ResumeSection: React.FC<ResumeSectionProps> = ({ resumeItems }) => {
   const [activeCategory, setActiveCategory] = useState<ResumeCategory>('EXPERIENCE');
   const [selectedImageItem, setSelectedImageItem] = useState<ResumeItem | null>(null);
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const [visibleLimit, setVisibleLimit] = useState<number>(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleLimit(3);
+      } else {
+        setVisibleLimit(4);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleCategoryChange = (catId: ResumeCategory) => {
+    setActiveCategory(catId);
+    setShowAll(false);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -35,6 +55,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ resumeItems }) => 
   }, [selectedImageItem]);
 
   const filteredItems = resumeItems.filter((item) => item.category === activeCategory);
+  const displayedItems = showAll ? filteredItems : filteredItems.slice(0, visibleLimit);
 
   return (
     <section id="resume" className="py-16">
@@ -59,7 +80,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ resumeItems }) => 
           return (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              onClick={() => handleCategoryChange(cat.id)}
               className={`flex items-center space-x-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 min-h-[44px] ${
                 isActive
                   ? 'bg-amber-400 text-black shadow-md scale-105'
@@ -77,7 +98,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ resumeItems }) => 
       {activeCategory === 'AWARD' ? (
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
-            {filteredItems.map((item) => {
+            {displayedItems.map((item) => {
               const imgUrl = item.imageUrl ? formatImageUrl(item.imageUrl) : '';
               return (
                 <motion.div
@@ -156,7 +177,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ resumeItems }) => 
       ) : (
         /* Standard Layout for EXPERIENCE, EDUCATION, and ORGANIZATION */
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredItems.map((item, idx) => {
+          {displayedItems.map((item, idx) => {
             const imgUrl = item.imageUrl ? formatImageUrl(item.imageUrl) : '';
             return (
               <motion.div
@@ -213,6 +234,30 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ resumeItems }) => 
               Belum ada data dalam kategori ini.
             </div>
           )}
+        </div>
+      )}
+
+      {/* Button "Lihat Semua" / "Tampilkan Lebih Sedikit" */}
+      {filteredItems.length > visibleLimit && !showAll && (
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAll(true)}
+            className="bg-amber-400 hover:bg-amber-500 text-black font-extrabold px-8 py-3.5 rounded-full text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+          >
+            <span>LIHAT SEMUA</span>
+            <ChevronDown size={18} />
+          </button>
+        </div>
+      )}
+
+      {showAll && filteredItems.length > visibleLimit && (
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAll(false)}
+            className="bg-black hover:bg-gray-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-full text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:scale-105 transition-all duration-300 border-2 border-amber-400 flex items-center space-x-2 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            <span>TAMPILKAN LEBIH SEDIKIT</span>
+          </button>
         </div>
       )}
 
